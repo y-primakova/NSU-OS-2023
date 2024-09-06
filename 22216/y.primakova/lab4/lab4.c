@@ -58,12 +58,24 @@ void printList(Node* start) {
 int main() {
     char str[SIZE_STR + 1];
     Node* start = NULL;
+    int newLine = 1;
     while(1) {
-        if (fgets(str, SIZE_STR, stdin) == NULL) {
+        char* line = fgets(str, SIZE_STR, stdin);
+        if (line == NULL) {
+            if (!feof(stdin)) {
+                perror("Fgets fail.");
+                exit(-1);
+            } else {
+                break;
+            }
+        }
+        if (str[0] == '.' && newLine) {
             break;
         }
-        if (str[0] == '.') {
-            break;
+        if (str[strlen(line) - 1] != '\n') {
+            newLine = 0;
+        } else {
+            newLine = 1;
         }
         if (start == NULL) {
             start = initNode(str, start);
