@@ -11,20 +11,20 @@ int main() {
     char buf[BUFSIZ];
     ssize_t size;
     char *socketPath = "./socket";
-    int socket = socket(AF_UNIX, SOCK_STREAM, 0);
-    if (socket == -1) {
+    int sock = socket(AF_UNIX, SOCK_STREAM, 0);
+    if (sock == -1) {
         perror("Socket fail.");
         exit(-1);
     }
     memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_UNIX;
     strcpy(addr.sun_path, socketPath);
-    if (connect(socket, (struct addr*)&addr, sizeof(addr)) == -1) {
+    if (connect(sock, (const struct sockaddr*)&addr, sizeof(addr)) == -1) {
         perror("Connect fail.");
         exit(-1);
     }
     while ((size = read(0, buf, BUFSIZ)) > 0) {
-        if (write(socket, buf, size) == -1) {
+        if (write(sock, buf, size) == -1) {
             perror("Write fail.");
             exit(-1);
         }

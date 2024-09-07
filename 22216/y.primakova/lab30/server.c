@@ -20,7 +20,7 @@ int main() {
     memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_UNIX;
     strcpy(addr.sun_path, socketPath);
-    if (bind(server_socket, (struct sockaddr*)&addr, sizeof(addr)) == -1) {
+    if (bind(server_socket, (const struct sockaddr*)&addr, sizeof(addr)) == -1) {
         perror("Bind fail.");
         exit(-1);
     }
