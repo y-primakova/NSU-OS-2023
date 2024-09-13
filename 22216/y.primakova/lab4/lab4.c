@@ -62,11 +62,11 @@ int main() {
     while(1) {
         char* line = fgets(str, SIZE_STR, stdin);
         if (line == NULL) {
-            if (!feof(stdin)) {
+            if (feof(stdin)) {
+                break;
+            } else {
                 perror("Fgets fail.");
                 exit(-1);
-            } else {
-                break;
             }
         }
         if (str[0] == '.' && newLine) {
